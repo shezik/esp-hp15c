@@ -1,8 +1,10 @@
+#include <Arduino.h>
 #include <AceRoutine.h>
 #include <math.h>
-#include <BigNumber.h>
+// #include <BigNumber.h>
 #include <BasicLinearAlgebra.h>
-#include <string.h>
+// #include <string.h>
+#include "Keyboard_10x4_MCP23016.h"
 
 bool On = true;
 // var Display; (Object)
@@ -27,22 +29,24 @@ Opcode (*OldPrefix)(uint8_t k); // var OldPrefix;
 // var LcdDisplay; (Object)
 uint8_t DisplayMode = 1; // 1=FIX 2=SCI 3=ENG
 uint8_t DisplayDigits = 4;
-unsigned short FullCircle = 360;
+uint16_t FullCircle = 360;
 double TrigFactor = M_PI / 180;
 bool Flags[] = {false, false, false, false, false, false, false, false, false, false};
 bool User = false;
 bool Prgm = false;
 Opcode Program[60]; // var Program = [null];
-unsigned short PC = 0;
+uint16_t PC = 0;
 bool Running = false;
 // var RunTimer = null;
 bool BlinkOn = false;
 // var Blinker = null;
-unsigned short ReturnStack[60]; // var ReturnStack = [];
+uint16_t ReturnStack[60]; // var ReturnStack = [];
 uint8_t Result = 0;
 
 const double MAX = 9.999999999e99;
 const uint8_t MAX_MAG = 99;
+
+U8G2_ST7565_JLX12864_F_4W_SW_SPI u8g2(U8G2_R2, /*clock=*/D5, /*data=*/D7, /*cs=*/D8, /*dc=*/D6, /*reset=*/U8X8_PIN_NONE);
 
 void setup() {
     Serial.begin(115200);
