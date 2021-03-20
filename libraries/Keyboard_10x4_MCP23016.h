@@ -1,6 +1,0 @@
-#ifndef HEADER_KBD_10X4_MCP23016
-#define HEADER_KBD_10X4_MCP23016
-
-
-
-#endif
