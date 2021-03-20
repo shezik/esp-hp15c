@@ -60,5 +60,6 @@ void setup() {
 }
 
 void loop() {
-
+    Serial.print(keyboard.getKey());
+    Serial.println();
 }

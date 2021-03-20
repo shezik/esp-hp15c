@@ -20,12 +20,6 @@ class Keyboard_10x4_MCP23016
         static const uint8_t IOCON0  = 0x0A;  // I/O EXPANDER CONTROL REGISTER 0
         static const uint8_t IOCON1  = 0x0B;  // I/O EXPANDER CONTROL REGISTER 1
 
-        static constexpr uint8_t keyBindings[/*rows=*/4][/*cols=*/10] = {
-        { 0,  1,  2,  3,  4,  5,  6,  7,  8,  9},
-        {10, 11, 12, 13, 14, 15, 16, 17, 18, 19},
-        {20, 21, 22, 23, 24, 25, 26, 27, 28, 29},
-        {30, 31, 32, 33, 34, 35, 36, 37, 38, 39} }; // 10x4 keyboard key bindings
-
         uint8_t MCPAddress, MCPSDA, MCPSCL;
         uint8_t readBlockData(uint8_t gp);
         void writeBlockData(uint8_t reg, uint8_t data);

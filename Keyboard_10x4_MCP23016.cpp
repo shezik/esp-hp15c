@@ -1,6 +1,13 @@
 #include <Arduino.h>
 #include "Keyboard_10x4_MCP23016.h"
 
+// Compiler would complain if I didn't move the following code out of class definition
+static const uint8_t keyBindings[/*rows=*/4][/*cols=*/10] = {
+        { 0,  1,  2,  3,  4,  5,  6,  7,  8,  9},
+        {10, 11, 12, 13, 14, 15, 16, 17, 18, 19},
+        {20, 21, 22, 23, 24, 25, 26, 27, 28, 29},
+        {30, 31, 32, 33, 34, 35, 36, 37, 38, 39} }; // 10x4 keyboard key bindings
+
 Keyboard_10x4_MCP23016::Keyboard_10x4_MCP23016(uint8_t MCPAddress_, uint8_t MCPSDA_, uint8_t MCPSCL_)
     : MCPAddress(MCPAddress_)
     , MCPSDA(MCPSDA_)
@@ -69,10 +76,10 @@ short Keyboard_10x4_MCP23016::getKey() {
         return keyBindings[coordRow][coordCol];
     }
 
-    for (int i = 0; i < 10; i++) {
+    for (int i = 0; i < 6; i++) {
         writeBlockData(GP1, 0b00000001 << i);
         if (readBlockData(GP0) & 0b00001111) {
-            coordCol = i; // coordCol = 0, 1, 2, 3, 4, 5, 6, 7, 8, 9
+            coordCol = i; // coordCol = 0, 1, 2, 3, 4, 5
             break;
         }
     }

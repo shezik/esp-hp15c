@@ -1,0 +1,2 @@
+# ignore arduino build cache directory
+/build/
