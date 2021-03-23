@@ -20,8 +20,8 @@ void Keyboard_10x4_MCP23016::init() {
     Wire.begin(/*SDA=*/MCPSDA, /*SCL=*/MCPSCL);
     Wire.setClock(200000); // !!Not sure about this value
     // Configure first 4 pins as input and other 12 pins as output
-    writeBlockData(IODIR0, B00001111);
-    writeBlockData(IODIR1, B00000000);
+    writeBlockData(IODIR0, 0b00001111);
+    writeBlockData(IODIR1, 0b00000000);
 }
 
 uint8_t Keyboard_10x4_MCP23016::readBlockData(uint8_t gp) {
@@ -42,11 +42,11 @@ void Keyboard_10x4_MCP23016::writeBlockData(uint8_t reg, uint8_t data) {
     delay(10);
 }
 
-short Keyboard_10x4_MCP23016::getKey() {
+uint8_t Keyboard_10x4_MCP23016::getKey() {
 
     // 14-pin 10x4 keyboard scanner, one keystroke at a time
 
-    uint8_t coordRow, coordCol = -1;
+    uint8_t coordRow, coordCol = 255;
 
     writeBlockData(GP0, 0b11110000);
     writeBlockData(GP1, 0b00111111);
@@ -57,7 +57,7 @@ short Keyboard_10x4_MCP23016::getKey() {
     writeBlockData(GP1, 0b00000000);
 
     if (coordRow != 1 && coordRow != 2 && coordRow != 4 && coordRow != 8) {
-        return -1;
+        return 255;
     }
 
     coordRow = int(log(coordRow) / log(2)); // coordRow = 0, 1, 2, 3
@@ -72,7 +72,7 @@ short Keyboard_10x4_MCP23016::getKey() {
 
     writeBlockData(GP0, 0b00000000);
 
-    if (coordCol != -1) {
+    if (coordCol != 255) {
         return keyBindings[coordRow][coordCol];
     }
 
@@ -86,8 +86,8 @@ short Keyboard_10x4_MCP23016::getKey() {
 
     writeBlockData(GP1, 0b00000000);
 
-    if (coordCol == -1) {
-        return -1; // Key was released too early
+    if (coordCol == 255) {
+        return 255; // Key was released too early
     }
 
     return keyBindings[coordRow][coordCol + 4];

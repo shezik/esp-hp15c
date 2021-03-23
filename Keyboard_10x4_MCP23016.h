@@ -26,7 +26,7 @@ class Keyboard_10x4_MCP23016
 
     public:
         Keyboard_10x4_MCP23016(uint8_t MCPAddress_ = 0x20, uint8_t MCPSDA_ = D2, uint8_t MCPSCL_ = D1);
-        short getKey();
+        uint8_t getKey();
         void init();
 };
 
