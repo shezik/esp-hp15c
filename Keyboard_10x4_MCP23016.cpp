@@ -19,6 +19,7 @@ Keyboard_10x4_MCP23016::Keyboard_10x4_MCP23016(uint8_t MCPAddress_, uint8_t MCPS
 void Keyboard_10x4_MCP23016::init() {
     Wire.begin(/*SDA=*/MCPSDA, /*SCL=*/MCPSCL);
     Wire.setClock(200000); // !!Not sure about this value
+    
     // Configure first 4 pins as input and other 12 pins as output
     writeBlockData(IODIR0, 0b00001111);
     writeBlockData(IODIR1, 0b00000000);
@@ -60,8 +61,6 @@ uint8_t Keyboard_10x4_MCP23016::getKey() {
         return 255;
     }
 
-    coordRow = int(log(coordRow) / log(2)); // coordRow = 0, 1, 2, 3
-
     for (int i = 0; i < 4; i++) {
         writeBlockData(GP0, 0b00010000 << i);
         if (readBlockData(GP0) & 0b00001111) {
@@ -71,6 +70,8 @@ uint8_t Keyboard_10x4_MCP23016::getKey() {
     }
 
     writeBlockData(GP0, 0b00000000);
+
+    coordRow = int(log(coordRow) / log(2)); // coordRow = 0, 1, 2, 3
 
     if (coordCol != 255) {
         return keyBindings[coordRow][coordCol];

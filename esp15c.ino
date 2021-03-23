@@ -1,9 +1,11 @@
 #include <Arduino.h>
+#include <esp15c.h>
 #include <AceRoutine.h>
+#include <Wire.h>
 #include <math.h>
 // #include <BigNumber.h>
 #include <BasicLinearAlgebra.h>
-// #include <string.h>
+#include <string.h>
 #include <U8g2lib.h>
 #include "Keyboard_10x4_MCP23016.h"
 
