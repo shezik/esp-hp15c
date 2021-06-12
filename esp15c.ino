@@ -1,5 +1,5 @@
 #include <Arduino.h>
-#include <esp15c.h>
+#include "esp15c.h"
 #include <AceRoutine.h>
 #include <Wire.h>
 #include <math.h>
@@ -57,7 +57,7 @@ void setup() {
     Serial.begin(115200);
     randomSeed(analogRead(A0));
 
-    u8g2.begin(); // Start U8g2 beforehand to display error messages to users
+    u8g2.begin(); // Start U8g2 beforehand to display error messages to the user
     keyboard.init();
 }
 

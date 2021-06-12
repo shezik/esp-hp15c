@@ -1,2 +1,3 @@
 # ignore arduino build cache directory
 /build/
+.vscode/c_cpp_properties.json
