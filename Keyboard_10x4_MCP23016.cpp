@@ -3,17 +3,17 @@
 
 // Compiler would complain if I didn't move the following code out of class definition
 static const uint8_t keyBindings[/*rows=*/4][/*cols=*/10] = {
-        { 0,  1,  2,  3,  4,  5,  6,  7,  8,  9},
-        {10, 11, 12, 13, 14, 15, 16, 17, 18, 19},
-        {20, 21, 22, 23, 24, 25, 26, 27, 28, 29},
-        {30, 31, 32, 33, 34, 35, 36, 37, 38, 39} }; // 10x4 keyboard key bindings
+        { 1,  2,  3,  4,  5,  6,  7,  8,  9, 10},
+        {11, 12, 13, 14, 15, 16, 17, 18, 19, 20},
+        {21, 22, 23, 24, 25, 26, 27, 28, 29, 30},
+        {31, 32, 33, 34, 35, 36, 37, 38, 39, 40} }; // 10x4 keyboard key bindings
 
 Keyboard_10x4_MCP23016::Keyboard_10x4_MCP23016(uint8_t MCPAddress_, uint8_t MCPSDA_, uint8_t MCPSCL_)
     : MCPAddress(MCPAddress_)
     , MCPSDA(MCPSDA_)
     , MCPSCL(MCPSCL_)
 {
-    // Nothing to place here yet
+    // Nothing to be placed here yet
 }
 
 void Keyboard_10x4_MCP23016::init() {
@@ -58,7 +58,7 @@ uint8_t Keyboard_10x4_MCP23016::getKey() {
     writeBlockData(GP1, 0b00000000);
 
     if (coordRow != 1 && coordRow != 2 && coordRow != 4 && coordRow != 8) {
-        return 255;
+        return 0;
     }
 
     for (int i = 0; i < 4; i++) {
@@ -88,7 +88,7 @@ uint8_t Keyboard_10x4_MCP23016::getKey() {
     writeBlockData(GP1, 0b00000000);
 
     if (coordCol == 255) {
-        return 255; // Key was released too early
+        return 0; // Key was released too early
     }
 
     return keyBindings[coordRow][coordCol + 4];

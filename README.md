@@ -1,2 +1,2 @@
 # esp15c
- ESP8266 Arduino port of Greg Hewgill's HP-15C calculator simulator.
+ Eric Smith's Nonpareil emulator ported to ESP8266.
